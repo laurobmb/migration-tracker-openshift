@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: migration-tracker-api
+  labels:
+    app: migration-tracker-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: migration-tracker-api
+  template:
+    metadata:
+      labels:
+        app: migration-tracker-api
+    spec:
+      serviceAccountName: migration-tracker
+      containers:
+      - name: migration-tracker-api
+        image: quay.io/lagomes/migration-tracker-api:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: migration-tracker-config
+        - secretRef:
+            name: migration-tracker-secrets
+        env:
+        - name: PORT
+          value: "8080"
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+

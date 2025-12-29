@@ -1,0 +1,13 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: migration-tracker-api
+  annotations:
+    # Hostname para ambiente UAT
+    # haproxy.router.openshift.io/timeout: "60s"
+spec:
+  host: migration-tracker-uat.apps.malima.rhbr-lab.com
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+

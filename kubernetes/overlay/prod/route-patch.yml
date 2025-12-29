@@ -1,0 +1,15 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: migration-tracker-api
+  annotations:
+    # Adicione o hostname desejado para produção
+    # route.openshift.io/host.generated: "true"
+    # Ou especifique um hostname customizado:
+    # haproxy.router.openshift.io/timeout: "60s"
+spec:
+  host: migration-tracker.apps.malima.rhbr-lab.com
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+

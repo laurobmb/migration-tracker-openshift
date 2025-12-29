@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: migration-tracker
+
+resources:
+  - configmap.yml
+  - secret.yml
+  - serviceaccount.yml
+  - postgres-pvc.yml
+  - postgres-deployment.yml
+  - postgres-service.yml
+  - deployment.yml
+  - service.yml
+  - route.yml
+  - init-db-job-init.yml
+  - init-db-job-users.yml
+  - init-db-job-seed-catalog.yml
+
+commonLabels:
+  project: migration-tracker
+
+configurations:
+  - kustomize-config.yml

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: migration-tracker-postgres-pvc
+  labels:
+    app: migration-tracker-postgres
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  # Para OpenShift, não especificar storageClassName usa o default provisioner
+  # Se necessário, adicione: storageClassName: gp2 (ou outro conforme seu cluster)
+

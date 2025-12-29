@@ -1,0 +1,28 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: migration-tracker-prod
+
+resources:
+  - namespace.yml
+  - ../../base
+
+namePrefix: prod-
+
+commonLabels:
+  environment: production
+
+images:
+  - name: quay.io/lagomes/migration-tracker-api
+    newTag: v1.4
+
+replicas:
+  - name: migration-tracker-api
+    count: 3
+  - name: migration-tracker-postgres
+    count: 1
+
+patchesStrategicMerge:
+  - deployment-patch.yml
+  - route-patch.yml
+
