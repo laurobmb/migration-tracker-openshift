@@ -15,7 +15,7 @@ commonLabels:
 
 images:
   - name: quay.io/lagomes/migration-tracker-api
-    newTag: v1.4
+    newTag: developer-v2.0
 
 replicas:
   - name: migration-tracker-api
